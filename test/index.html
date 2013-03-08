@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Backbone.Collection.Lunr</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mocha.css" />
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://raw.github.com/LearnBoost/expect.js/5a1e44c36ad14ee699bbe4e230564cfee176a1e4/expect.js"></script>
+    <script src="https://raw.github.com/visionmedia/mocha/4da2723457ba7acb574434431b09b0b456ea72f8/mocha.js"></script>
+
+    <script src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
+    <script src="http://documentcloud.github.com/backbone/backbone-min.js"></script>
+    <script src="https://raw.github.com/olivernn/lunr.js/5e538461497ab9b99997443ac94763c52c21f8db/lunr.min.js"></script>
+    <script src="../backlunr.js"></script>
+
+     <script src="data.js"></script>
+
+    <script>mocha.setup('bdd')</script>
+    <script src="test.js"></script>
+
+    <script>
+      mocha.run();
+    </script>
+  </body>
+</html>
