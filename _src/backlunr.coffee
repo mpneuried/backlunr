@@ -32,8 +32,12 @@ class Backbone.Collection.Lunr extends Backbone.Collection
 		_model = model.toJSON()
 		# set the cid as ref
 		_model.cid = model.cid
-		# add empty strings to index for fields that are not defined in the model
-		_model[ field ] = "" for field in @_lunrFields when not _model[ field ]?
+		# add empty strings to index for fields that are not defined in the model or convert it to strings
+		for field in @_lunrFields
+			if not _model[ field ]?
+				_model[ field ] = ""
+			else
+				_model[ field ] = _model[ field ].toString()
 		# add the model to the index
 		@_lunrIndex.add( _model )
 		return
@@ -50,8 +54,12 @@ class Backbone.Collection.Lunr extends Backbone.Collection
 		_model = model.toJSON()
 		# set the cid as ref
 		_model.cid = model.cid
-		# add empty strings to index for fields that are not defined in the model
-		_model[ field ] = "" for field in @_lunrFields when not _model[ field ]?
+		# add empty strings to index for fields that are not defined in the model or convert it to strings
+		for field in @_lunrFields
+			if not _model[ field ]?
+				_model[ field ] = ""
+			else
+				_model[ field ] = _model[ field ].toString()
 		# update the model in the index
 		@_lunrIndex.update( _model )
 		return

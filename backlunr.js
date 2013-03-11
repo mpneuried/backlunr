@@ -63,6 +63,8 @@
         field = _ref[_i];
         if (!(_model[field] != null)) {
           _model[field] = "";
+        } else {
+          _model[field] = _model[field].toString();
         }
       }
       this._lunrIndex.add(_model);
@@ -84,6 +86,8 @@
         field = _ref[_i];
         if (!(_model[field] != null)) {
           _model[field] = "";
+        } else {
+          _model[field] = _model[field].toString();
         }
       }
       this._lunrIndex.update(_model);

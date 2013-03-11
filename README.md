@@ -48,7 +48,7 @@ class Users extends Backbone.Collection.Lunr
 * `fields[ n ].name` ( String - required ): The field name within your model attribute
 * `fields[ n ].boost` ( Number - optional: default=1 ): A boost factor for results in this field.
 
-**Attension:** Currently Lunr.js does not support an indexing of numeric values.
+**Attension:** Currently Lunr.js does not support an indexing of numeric values. To use numeric values **backlunr** converts all fields to strings.
 
 ### search
 
@@ -101,7 +101,14 @@ If you define `raw=true` you will receive an array with object like `{ score: 0.
 
 ## Changelog
 
-`0.1.0` Initial version
+#### `0.2.0`
+
+* Added minified version
+* Added support for numeric values by converting every field-value to a string
+
+#### `0.1.0`
+
+* Initial version
 
 ## License 
 
