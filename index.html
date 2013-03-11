@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Backlunr by mpneuried</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/mpneuried/backlunr">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/mpneuried/backlunr/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/mpneuried/backlunr/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Backlunr</h1>
+          <p>is a solution to bring Backbone Collections together with the browser fulltext search engine Lunr.js</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/mpneuried">mpneuried</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>backlunr</h1>
+
+<p>is a solution to bring <a href="http://documentcloud.github.com/backbone/#Collection">Backbone Collections</a> together with the browser fulltext search engine <a href="http://lunrjs.com/">Lunr.js</a>.</p>
+
+<p><em>Written in coffee-script</em></p>
+
+<p><strong>INFO: all examples are written in coffee-script</strong></p>
+
+<h2>Install</h2>
+
+<p>To use <strong>backlunr</strong> you first have to load the dependencies:</p>
+
+<ul>
+<li>
+<a href="http://documentcloud.github.com/underscore">Underscore</a> </li>
+<li>
+<a href="http://documentcloud.github.com/backbone">Backbone</a> </li>
+<li><a href="http://lunrjs.com/">Lunr.js</a></li>
+</ul><p>Then add the <code>backlunr.js</code> script to your page.</p>
+
+<h2>Usage</h2>
+
+<h3>Config</h3>
+
+<p>To use the <code>lunr.js</code> fulltext search within a collection you have to load <code>backlunr.js</code> and use <code>Backbone.Collection.Lunr</code> instead of <code>Backbone.Collection.Lunr</code></p>
+
+<p>The only thing you have to define are the fields to index.</p>
+
+<p><strong>Config Example:</strong></p>
+
+<div class="highlight"><pre><span class="k">class</span> <span class="nx">User</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span>
+
+<span class="k">class</span> <span class="nx">Users</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">Lunr</span>
+    <span class="nv">model: </span><span class="nx">User</span>
+    <span class="nv">lunroptions: </span>
+        <span class="nv">fields: </span><span class="p">[</span>
+            <span class="p">{</span> <span class="nv">name: </span><span class="s">"firstname"</span><span class="p">,</span> <span class="nv">boost: </span><span class="mi">10</span> <span class="p">}</span>
+            <span class="p">{</span> <span class="nv">name: </span><span class="s">"lastname"</span><span class="p">,</span> <span class="nv">boost: </span><span class="mi">5</span> <span class="p">}</span>
+            <span class="p">{</span> <span class="nv">name: </span><span class="s">"email"</span> <span class="p">}</span>
+            <span class="p">{</span> <span class="nv">name: </span><span class="s">"address"</span> <span class="p">}</span>
+        <span class="p">]</span>
+</pre></div>
+
+<h4>lunroptions</h4>
+
+<ul>
+<li>
+<code>fields</code> ( Array | Function ): An array of field definitions or a method called on init/reset which has to return the field definitions array</li>
+<li>
+<code>fields[ n ]</code> ( Object ): The field definition</li>
+<li>
+<code>fields[ n ].name</code> ( String - required ): The field name within your model attribute</li>
+<li>
+<code>fields[ n ].boost</code> ( Number - optional: default=1 ): A boost factor for results in this field.</li>
+</ul><p><strong>Attension:</strong> Currently Lunr.js does not support an indexing of numeric values.</p>
+
+<h3>search</h3>
+
+<p>To search within your collection you just have to call <code>.search( "[ term ]" )</code>.</p>
+
+<p><strong>Search Example:</strong></p>
+
+<div class="highlight"><pre><span class="c1"># add some users</span>
+<span class="nv">usersCollection = </span><span class="k">new</span> <span class="nx">Users</span> <span class="p">[</span>
+    <span class="nv">firstname: </span><span class="s">"Fritz"</span><span class="p">,</span> <span class="nv">lastname: </span><span class="s">"Maier"</span><span class="p">,</span> <span class="s">"email"</span><span class="o">:</span> <span class="s">"fmaier@maier.com"</span><span class="p">,</span> <span class="s">"address"</span><span class="o">:</span> <span class="s">"Teststreet 123"</span>
+<span class="p">,</span> 
+    <span class="nv">firstname: </span><span class="s">"Hans"</span><span class="p">,</span> <span class="nv">lastname: </span><span class="s">"Schubert"</span><span class="p">,</span> <span class="s">"email"</span><span class="o">:</span> <span class="s">"hschubert@maier.com"</span><span class="p">,</span> <span class="s">"address"</span><span class="o">:</span> <span class="s">"Checkway 987"</span>
+<span class="p">]</span>
+
+<span class="nv">result = </span><span class="nx">usersCollection</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span> <span class="s">"Fritz"</span> <span class="p">)</span>
+<span class="c1"># [ User( Fritz ) ]</span>
+<span class="c1"># returns an array of matching models sorted by the result scoring</span>
+
+<span class="nx">result</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()</span>
+<span class="c1"># [ {firstname: "Fritz", lastname: "Maier", "email": "fmaier@maier.com", "address": "Teststreet 123"} ]</span>
+<span class="c1"># the single special method `toJSON` of the array returns all models converted by `model.toJSON()`.</span>
+</pre></div>
+
+<h3>Methods</h3>
+
+<h4>Collection.search( term [, raw ] )</h4>
+
+<p><code>.search()</code> is the only method added to the collection by <strong>Backlunr</strong>.</p>
+
+<p><strong>arguments:</strong></p>
+
+<ul>
+<li>
+<code>term</code> ( String - required ): the search term</li>
+<li>
+<code>raw</code> ( Boolean - optional: default=false ): Return the raw lunr result including the <code>score</code> and models <code>cid</code> as <code>ref</code>
+</li>
+</ul><p><strong>retuns ( Array ):</strong></p>
+
+<p>An array of matching models.<br>
+If you define <code>raw=true</code> you will receive an array with object like <code>{ score: 0.789, ref: "c123" }</code></p>
+
+<ul>
+<li>
+<code>toJSON()</code> If <code>raw=false</code> you can use the special <code>toJSON</code> method to transform the aray of models to an array of model attributes.</li>
+</ul><h2>Ideas</h2>
+
+<ul>
+<li>Create a solution to search in multiple collections by hooking them to a global search module. If a search has been done the result will return all matching models in al hooked collection including the type ( Collection name )</li>
+</ul><h2>Work in progress</h2>
+
+<p><code>backlunr</code> is work in progress. Your ideas, suggestions etc. are very welcome.</p>
+
+<h2>Changelog</h2>
+
+<p><code>0.1.0</code> Initial version</p>
+
+<h2>License</h2>
+
+<p>(The MIT License)</p>
+
+<p>Copyright (c) 2010 TCS &lt;dev (at) tcs.de&gt;</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
