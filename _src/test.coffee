@@ -32,7 +32,7 @@ describe 'Basics', ->
 	it 'search', (done)->
 		
 		result = testCollA.search( "Eros" ).toJSON()
-		console.log 'RESULT: search', result 
+		#console.log 'RESULT: search', result 
 		expect( result ).be.an( Array )
 		expect( result.length ).to.be.above(0)
 		expect(	result[ 0 ] ).to.have.property('title')
@@ -44,7 +44,7 @@ describe 'Basics', ->
 	it 'search raw', (done)->
 		
 		result = testCollA.search( "dignissim", true )
-		console.log 'RESULT: search raw', result 
+		#console.log 'RESULT: search raw', result 
 		expect( result ).be.an( Array )
 		expect( result.length ).to.be.above(0)
 		expect(	result[ 0 ] ).to.have.property('score')
@@ -62,7 +62,7 @@ describe 'Basics', ->
 	it 'try to find an old element', ( done )->
 
 		result = testCollA.search( "dignissim" )
-		console.log 'RESULT: try to find an old element', result
+		#console.log 'RESULT: try to find an old element', result
 		expect( result.toJSON() ).be.an( Array )
 		expect( result.toJSON().length ).to.be(0)
 		done()
@@ -71,7 +71,7 @@ describe 'Basics', ->
 	it 'try to find an new element', ( done )->
 
 		result = testCollA.search( "Gilmore" ).toJSON()
-		console.log 'RESULT: try to find an new element', result 
+		#console.log 'RESULT: try to find an new element', result 
 		expect( result ).be.an( Array )
 		expect( result.length ).to.be.above(0)
 		expect(	result[ 0 ] ).to.have.property('body')
@@ -95,7 +95,7 @@ describe 'Add, change and remove', ->
 	it 'search for one added model', (done)->
 
 		result = testCollA.search( "Lunr" ).toJSON()
-		console.log 'RESULT: search for one added model', result
+		#console.log 'RESULT: search for one added model', result
 		expect( result ).be.an( Array )
 		expect( result.length ).to.be.above(0)
 		expect(	result[ 0 ] ).to.have.property('title')
@@ -106,7 +106,7 @@ describe 'Add, change and remove', ->
 	it 'search for another added model', (done)->
 
 		result = testCollA.search( "Boxer" ).toJSON()
-		console.log 'RESULT: search for another added model', result
+		#console.log 'RESULT: search for another added model', result
 		expect( result ).be.an( Array )
 		expect( result.length ).to.be.above(0)
 		expect(	result[ 0 ] ).to.have.property('body')
@@ -133,7 +133,7 @@ describe 'Add, change and remove', ->
 	it 'search for removed model content', (done)->
 
 		result = testCollA.search( "Lunr" ).toJSON()
-		console.log 'search for removed model content', result
+		#console.log 'search for removed model content', result
 		expect( result ).be.an( Array )
 		expect( result.length ).to.be(0)
 		done()
@@ -142,7 +142,7 @@ describe 'Add, change and remove', ->
 	it 'search for changed model content', (done)->
 
 		result = testCollA.search( "Changed" ).toJSON()
-		console.log 'search for changed model content', result
+		#console.log 'search for changed model content', result
 		expect( result ).be.an( Array )
 		expect(	result[ 0 ] ).to.have.property('body')
 		expect(	result[ 0 ].title ).to.contain("Changed")
@@ -162,7 +162,7 @@ describe 'Tags', ->
 	it 'search for a tag', (done)->
 		
 		result = testCollB.search( "ipsum" ).toJSON()
-		console.log 'RESULT: search for a tag', result 
+		#console.log 'RESULT: search for a tag', result 
 		expect( result ).be.an( Array )
 		expect( result.length ).to.be.above(0)
 		expect(	result[ 0 ] ).to.have.property('tags')
@@ -174,7 +174,7 @@ describe 'Tags', ->
 	it 'search for a part of a tag', (done)->
 		
 		result = testCollB.search( "dign" ).toJSON()
-		console.log 'RESULT: search for a part of a tag', result 
+		#console.log 'RESULT: search for a part of a tag', result 
 		expect( result ).be.an( Array )
 		expect( result.length ).to.be.above(0)
 		expect(	result[ 0 ] ).to.have.property('tags')

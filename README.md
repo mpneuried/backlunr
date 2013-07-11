@@ -101,6 +101,11 @@ If you define `raw=true` you will receive an array with object like `{ score: 0.
 
 ## Changelog
 
+#### `0.2.1`
+
+* Updated test to Lunr.js `v0.4.0`, jquery `v2.0.3`, mocha `v0.2.0` and expect `v1.12.0`. **Backlunr test already working fine** but 15% faster.
+* Compiled scripts with new coffee version `v1.6.3`
+
 #### `0.2.0`
 
 * Added minified version
