@@ -6,13 +6,17 @@ class Backbone.Collection.Lunr extends Backbone.Collection
 	constructor: ( models, options )->
 
 		super( models, options )
-
+		@_lunrInitialized = false
 		@on "add", @_lunrAdd
 		@on "remove", @_lunrRemove
 		@on "change", @_lunrChange
 		return
-
-	_lunrInitialize: =>
+	
+	_lunrInitialize: ( force = false )=>
+		# silent exit on second init
+		if not force and @_lunrInitialized
+			return
+			
 		_coll = @
 		_coll._lunrFields = []
 		@_lunrIndex = lunr ->
@@ -27,8 +31,11 @@ class Backbone.Collection.Lunr extends Backbone.Collection
 				@field( field.name, _.omit( field, [ "isID", "name" ] ) )
 
 			return
+		@_lunrInitialized = true
+		return @
 
 	_lunrAdd: ( model )=>
+		@_lunrInitialize()
 		_model = model.toJSON()
 		# set the cid as ref
 		_model.cid = model.cid
@@ -43,6 +50,7 @@ class Backbone.Collection.Lunr extends Backbone.Collection
 		return
 
 	_lunrRemove: ( model )=>
+		@_lunrInitialize()
 		_model = model.toJSON()
 		# set the cid as ref
 		_model.cid = model.cid
@@ -51,6 +59,7 @@ class Backbone.Collection.Lunr extends Backbone.Collection
 		return
 
 	_lunrChange: ( model )=>
+		@_lunrInitialize()
 		_model = model.toJSON()
 		# set the cid as ref
 		_model.cid = model.cid
@@ -65,7 +74,7 @@ class Backbone.Collection.Lunr extends Backbone.Collection
 		return
 
 	reset: ( models, options )=>
-		@_lunrInitialize()
+		@_lunrInitialize( true )
 
 		super( models, options )
 
@@ -74,10 +83,13 @@ class Backbone.Collection.Lunr extends Backbone.Collection
 
 		return @
 
-	processTerm: ( term )=>
+	processTerm: ( term )->
 		return term
 
 	search: ( term, raw = false )=>
+		# first init if not inited yet
+		@_lunrInitialize()
+		
 		_lunrRes = @_lunrIndex.search( @processTerm( term ) )
 		if raw
 			return _lunrRes
@@ -91,4 +103,3 @@ class Backbone.Collection.Lunr extends Backbone.Collection
 			return _json
 
 		return _res
-

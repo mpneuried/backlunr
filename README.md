@@ -3,10 +3,7 @@ backlunr
 
 is a solution to bring [Backbone Collections](http://documentcloud.github.com/backbone/#Collection) together with the browser fulltext search engine [Lunr.js](http://lunrjs.com/).
 
-*Written in coffee-script*
-
 **INFO: all examples are written in coffee-script**
-
 
 ## Install
 
@@ -99,7 +96,28 @@ If you define `raw=true` you will receive an array with object like `{ score: 0.
 
 `backlunr` is work in progress. Your ideas, suggestions etc. are very welcome.
 
+## Development
+
+If you want to contribute you have to install the dependencies and gulp as task runner:
+
+```sh
+$ npm install
+$ npm install -g gulp
+```
+
+After that it's possible to build the code using
+
+```sh
+$ gulp
+```
+
 ## Changelog
+
+#### `0.2.3`
+
+* Fixed Issue #1 to init the collection on search if nor reset has been fired
+* Added gulp compile
+* Updated test to Lunr.js `v0.5.8`, jquery `v2.1.3`, mocha `v1.21.5` and expect `v0.3.1`. **Backlunr test already working fine*
 
 #### `0.2.2`
 
