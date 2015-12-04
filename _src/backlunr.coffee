@@ -1,6 +1,6 @@
 class Backbone.Collection.Lunr extends Backbone.Collection
 
-	lunroptions: 
+	lunroptions:
 		fields: []
 
 	constructor: ( models, options )->
@@ -29,24 +29,18 @@ class Backbone.Collection.Lunr extends Backbone.Collection
 			for field in _opt.fields
 				_coll._lunrFields.push( field.name )
 				@field( field.name, _.omit( field, [ "isID", "name" ] ) )
-
+			
+			for mdl in _coll.models
+				@add( _coll._lunrExtractData( mdl ) )
 			return
+
 		@_lunrInitialized = true
 		return @
 
 	_lunrAdd: ( model )=>
 		@_lunrInitialize()
-		_model = model.toJSON()
-		# set the cid as ref
-		_model.cid = model.cid
-		# add empty strings to index for fields that are not defined in the model or convert it to strings
-		for field in @_lunrFields
-			if not _model[ field ]?
-				_model[ field ] = ""
-			else
-				_model[ field ] = _model[ field ].toString()
 		# add the model to the index
-		@_lunrIndex.add( _model )
+		@_lunrIndex.add( @_lunrExtractData( model ) )
 		return
 
 	_lunrRemove: ( model )=>
@@ -60,6 +54,22 @@ class Backbone.Collection.Lunr extends Backbone.Collection
 
 	_lunrChange: ( model )=>
 		@_lunrInitialize()
+		
+		# update the model in the index
+		@_lunrIndex.update( @_lunrExtractData( model ) )
+		return
+
+	reset: ( models, options )=>
+
+		super( models, options )
+		@_lunrInitialize( true )
+
+		for model in @models
+			@_lunrAdd( model )
+
+		return @
+		
+	_lunrExtractData: ( model )=>
 		_model = model.toJSON()
 		# set the cid as ref
 		_model.cid = model.cid
@@ -69,20 +79,9 @@ class Backbone.Collection.Lunr extends Backbone.Collection
 				_model[ field ] = ""
 			else
 				_model[ field ] = _model[ field ].toString()
-		# update the model in the index
-		@_lunrIndex.update( _model )
-		return
-
-	reset: ( models, options )=>
-		@_lunrInitialize( true )
-
-		super( models, options )
-
-		for model in @models
-			@_lunrAdd( model )
-
-		return @
-
+		
+		return _model
+		
 	processTerm: ( term )->
 		return term
 
@@ -96,7 +95,7 @@ class Backbone.Collection.Lunr extends Backbone.Collection
 
 		_res = for res, idx in _lunrRes
 			@get( res.ref )
-
+			
 		_res.toJSON = ( options )->
 			_json = for model in @
 				model.toJSON( options )

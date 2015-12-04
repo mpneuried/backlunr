@@ -18,6 +18,7 @@
 
     function Lunr(models, options) {
       this.search = bind(this.search, this);
+      this._lunrExtractData = bind(this._lunrExtractData, this);
       this.reset = bind(this.reset, this);
       this._lunrChange = bind(this._lunrChange, this);
       this._lunrRemove = bind(this._lunrRemove, this);
@@ -42,7 +43,7 @@
       _coll = this;
       _coll._lunrFields = [];
       this._lunrIndex = lunr(function() {
-        var _opt, field, i, len, ref;
+        var _opt, field, i, j, len, len1, mdl, ref, ref1;
         if (_.isFunction(_coll.lunroptions)) {
           _opt = _coll.lunroptions(opt);
         } else {
@@ -55,26 +56,19 @@
           _coll._lunrFields.push(field.name);
           this.field(field.name, _.omit(field, ["isID", "name"]));
         }
+        ref1 = _coll.models;
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          mdl = ref1[j];
+          this.add(_coll._lunrExtractData(mdl));
+        }
       });
       this._lunrInitialized = true;
       return this;
     };
 
     Lunr.prototype._lunrAdd = function(model) {
-      var _model, field, i, len, ref;
       this._lunrInitialize();
-      _model = model.toJSON();
-      _model.cid = model.cid;
-      ref = this._lunrFields;
-      for (i = 0, len = ref.length; i < len; i++) {
-        field = ref[i];
-        if (_model[field] == null) {
-          _model[field] = "";
-        } else {
-          _model[field] = _model[field].toString();
-        }
-      }
-      this._lunrIndex.add(_model);
+      this._lunrIndex.add(this._lunrExtractData(model));
     };
 
     Lunr.prototype._lunrRemove = function(model) {
@@ -86,8 +80,24 @@
     };
 
     Lunr.prototype._lunrChange = function(model) {
-      var _model, field, i, len, ref;
       this._lunrInitialize();
+      this._lunrIndex.update(this._lunrExtractData(model));
+    };
+
+    Lunr.prototype.reset = function(models, options) {
+      var i, len, model, ref;
+      Lunr.__super__.reset.call(this, models, options);
+      this._lunrInitialize(true);
+      ref = this.models;
+      for (i = 0, len = ref.length; i < len; i++) {
+        model = ref[i];
+        this._lunrAdd(model);
+      }
+      return this;
+    };
+
+    Lunr.prototype._lunrExtractData = function(model) {
+      var _model, field, i, len, ref;
       _model = model.toJSON();
       _model.cid = model.cid;
       ref = this._lunrFields;
@@ -99,19 +109,7 @@
           _model[field] = _model[field].toString();
         }
       }
-      this._lunrIndex.update(_model);
-    };
-
-    Lunr.prototype.reset = function(models, options) {
-      var i, len, model, ref;
-      this._lunrInitialize(true);
-      Lunr.__super__.reset.call(this, models, options);
-      ref = this.models;
-      for (i = 0, len = ref.length; i < len; i++) {
-        model = ref[i];
-        this._lunrAdd(model);
-      }
-      return this;
+      return _model;
     };
 
     Lunr.prototype.processTerm = function(term) {
