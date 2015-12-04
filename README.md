@@ -18,7 +18,7 @@ Then add the `backlunr.js` script to your page.
 
 ### Config
 
-To use the `lunr.js` fulltext search within a collection you have to load `backlunr.js` and use `Backbone.Collection.Lunr` instead of `Backbone.Collection.Lunr`
+To use the `lunr.js` fulltext search within a collection you have to load `backlunr.js` and use `Backbone.Collection.Lunr` instead of `Backbone.Collection`
 
 The only thing you have to define are the fields to index.
 
