@@ -1,6 +1,6 @@
 /**
  * backlunr - is a solution to bring Backbone Collections together with the browser fulltext search engine Lunr.js
- * @version v0.2.3
+ * @version v0.2.4
  * @link https://github.com/mpneuried/backlunr
  * @license MIT
  */
