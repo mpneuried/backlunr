@@ -113,6 +113,12 @@ $ gulp
 
 ## Changelog
 
+#### `0.2.4`
+
+* Readme typo fix [#2](https://github.com/mpneuried/backlunr/pull/2). Thanks to [Cody Nguyen](https://github.com/codynguyen)
+* restructured code
+* Updated test to Lunr.js `v0.6.0`, jquery `v2.1.4`, backbone `v1.2.3`, mocha `v2.3.4` and expect `v0.3.1`. **Backlunr test already working fine*
+
 #### `0.2.3`
 
 * Fixed Issue #1 to init the collection on search if nor reset has been fired
@@ -136,6 +142,10 @@ $ gulp
 #### `0.1.0`
 
 * Initial version
+
+## Todo
+
+- restructure to use it standalone or with browserify, AMD, ...
 
 ## License 
 
