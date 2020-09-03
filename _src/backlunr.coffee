@@ -75,13 +75,14 @@ class Backbone.Collection.Lunr extends Backbone.Collection
 		_model.cid = model.cid
 		# add empty strings to index for fields that are not defined in the model or convert it to strings
 		for field in @_lunrFields
-			if not _model[ field ]?
+			value = @_getFieldValue(_model, field)
+			if not value?
 				_model[ field ] = ""
 			else
-				if Array.isArray( _model[ field ] )
-					_model[ field ] = _model[ field ].map( ( el ) => return el?.toString() or "" ).join(" ")
+				if Array.isArray( value )
+					_model[ field ] = value.map( ( el ) => return el?.toString() or "" ).join(" ")
 				else
-					_model[ field ] = _model[ field ].toString()
+					_model[ field ] = value.toString()
 		
 		return _model
 		
@@ -105,3 +106,10 @@ class Backbone.Collection.Lunr extends Backbone.Collection
 			return _json
 
 		return _res
+
+	_getFieldValue: ( _model, field ) =>
+		if field.indexOf(".") >= 0
+			[first, rest...] = field.split(".")
+			return @_getFieldValue( _model[ first ], rest.join(".") )
+		else
+			return _model[ field ]

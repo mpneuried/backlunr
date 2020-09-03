@@ -14,6 +14,7 @@ class TestCollectionB extends Backbone.Collection.Lunr
 			{ name: "name", boost: 10 }
 			{ name: "email" }
 			{ name: "tags", boost: 5 }
+			{ name: "settings.labels", boost: 20 }
 		]
 
 
@@ -189,6 +190,17 @@ describe 'Tags', ->
 		expect( result.length ).to.be.above(0)
 		expect(	result[ 0 ] ).to.have.property('tags')
 		expect(	result[ 0 ].tags ).to.contain( "ab xy" )
+
+		done()
+		return
+	
+	it 'search for something within sub object', (done)->
+		query = "aabbcc"
+		result = testCollB.search( query).toJSON()
+		#console.log 'RESULT: search for a tag', result 
+		expect( result ).be.an( Array )
+		expect( result.length ).to.be.above(0)
+		expect(	result[ 0 ] ).property('settings').property('labels').contain( query )
 
 		done()
 		return
