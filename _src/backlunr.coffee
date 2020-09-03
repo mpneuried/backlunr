@@ -78,7 +78,10 @@ class Backbone.Collection.Lunr extends Backbone.Collection
 			if not _model[ field ]?
 				_model[ field ] = ""
 			else
-				_model[ field ] = _model[ field ].toString()
+				if Array.isArray( _model[ field ] )
+					_model[ field ] = _model[ field ].map( ( el ) => return el?.toString() or "" ).join(" ")
+				else
+					_model[ field ] = _model[ field ].toString()
 		
 		return _model
 		

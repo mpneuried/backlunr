@@ -41,6 +41,16 @@ describe 'Basics', ->
 		done()
 		return
 
+	it 'search width space', (done)->
+		query = "dolor accumsan";
+		result = testCollA.search( query ).toJSON()
+		#console.log 'RESULT: search', result 
+		expect( result ).be.an( Array )
+		expect( result.length ).to.be.above(0)
+
+		done()
+		return
+
 	it 'search raw', (done)->
 		
 		result = testCollA.search( "dignissim", true )
@@ -167,6 +177,18 @@ describe 'Tags', ->
 		expect( result.length ).to.be.above(0)
 		expect(	result[ 0 ] ).to.have.property('tags')
 		expect(	result[ 0 ].tags ).to.contain( "ipsum" )
+
+		done()
+		return
+
+	it 'search for a tag with space', (done)->
+		
+		result = testCollB.search( "ab xy" ).toJSON()
+		#console.log 'RESULT: search for a tag', result 
+		expect( result ).be.an( Array )
+		expect( result.length ).to.be.above(0)
+		expect(	result[ 0 ] ).to.have.property('tags')
+		expect(	result[ 0 ].tags ).to.contain( "ab xy" )
 
 		done()
 		return
