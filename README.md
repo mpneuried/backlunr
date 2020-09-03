@@ -113,6 +113,11 @@ $ gulp
 
 ## Changelog
 
+#### `0.3.0`
+
+- added option to grab the contenct from sub elements
+- use coffee 1.x for compile
+
 #### `0.2.5`
 
 - Fixed handling of tags/arrays with spaces
