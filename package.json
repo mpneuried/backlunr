@@ -1,6 +1,6 @@
 {
 	"name": "backlunr",
-	"version": "0.2.5",
+	"version": "0.3.0",
 	"description": "is a solution to bring Backbone Collections together with the browser fulltext search engine Lunr.js",
 	"main": "backlunr.js",
 	"directories": {
