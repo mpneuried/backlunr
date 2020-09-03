@@ -46,6 +46,6 @@ const release = series(compileTest, compile, compress);
 exports.compile = compile;
 exports.compileTest = compileTest;
 exports.release = release;
-exports.compileAll = series(compileTest, compile);
+exports.compileAll = series(compileTest, release);
 
 exports.default = release;
