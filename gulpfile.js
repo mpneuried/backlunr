@@ -19,7 +19,7 @@ function compress() {
 	return (
 		src("backlunr.js")
 			//.pipe(uglify())
-			.pipe(header(banner, { pkg: pkg }))
+			//.pipe(header(banner, { pkg: pkg }))
 			.pipe(
 				rename({
 					extname: ".min.js",
