@@ -1,42 +1,51 @@
-var gulp = require('gulp');
-var coffee = require('gulp-coffee');
-var uglify = require('gulp-uglify');
-var rename = require("gulp-rename");
-var header = require('gulp-header');
+const { src, dest, series } = require("gulp");
+const coffee = require("gulp-coffee");
+const uglify = require("gulp-uglify");
+const rename = require("gulp-rename");
+const header = require("gulp-header");
 
-var pkg = require('./package.json');
-var banner = ['/**',
-  ' * <%= pkg.name %> - <%= pkg.description %>',
-  ' * @version v<%= pkg.version %>',
-  ' * @link <%= pkg.homepage %>',
-  ' * @license <%= pkg.license %>',
-  ' */',
-  ''].join('\n');
+const pkg = require("./package.json");
+const banner = [
+	"/**",
+	" * <%= pkg.name %> - <%= pkg.description %>",
+	" * @version v<%= pkg.version %>",
+	" * @link <%= pkg.homepage %>",
+	" * @license <%= pkg.license %>",
+	" */",
+	"",
+].join("\n");
 
-gulp.task('compress', ["compile"], function() {
-	return gulp.src('backlunr.js')
-		.pipe(uglify())
-		.pipe(header(banner, { pkg : pkg } ))
-		.pipe(rename({
-			extname: '.min.js'
-		}))
-		.pipe(gulp.dest(''));
-});
-
-gulp.task('compile', function() {
-	return gulp.src('_src/backlunr.coffee')
+function compress() {
+	return (
+		src("backlunr.js")
+			//.pipe(uglify())
+			.pipe(header(banner, { pkg: pkg }))
+			.pipe(
+				rename({
+					extname: ".min.js",
+				})
+			)
+			.pipe(dest("."))
+	);
+}
+function compile() {
+	return src("_src/backlunr.coffee")
 		.pipe(coffee())
-		.pipe(header(banner, { pkg : pkg } ))
-		.pipe(gulp.dest(''));
-});
-
-gulp.task('compile-test', function() {
-	return gulp.src('_src/test.coffee')
+		.pipe(header(banner, { pkg: pkg }))
+		.pipe(dest("."));
+}
+function compileTest() {
+	return src("_src/test.coffee")
 		.pipe(coffee())
-		.pipe(header(banner, { pkg : pkg } ))
-		.pipe(gulp.dest('test'));
-});
+		.pipe(header(banner, { pkg: pkg }))
+		.pipe(dest("test"));
+}
 
-gulp.task('release', [ "compile-test", "compress" ] )
+const release = series(compileTest, compile, compress);
 
-gulp.task('default', [ "release" ] )
+exports.compile = compile;
+exports.compileTest = compileTest;
+exports.release = release;
+exports.compileAll = series(compileTest, compile);
+
+exports.default = release;

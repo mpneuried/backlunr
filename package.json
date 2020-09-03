@@ -1,34 +1,36 @@
 {
-  "name": "backlunr",
-  "version": "0.2.4",
-  "description": "is a solution to bring Backbone Collections together with the browser fulltext search engine Lunr.js",
-  "main": "backlunr.js",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mpneuried/backlunr.git"
-  },
-  "keywords": [
-    "backbone",
-    "lunr",
-    "search"
-  ],
-  "author": "mpneuried",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/mpneuried/backlunr/issues"
-  },
-  "homepage": "https://github.com/mpneuried/backlunr",
-  "devDependencies": {
-    "gulp": "^3.8.11",
-    "gulp-coffee": "^2.3.1",
-    "gulp-header": "^1.2.2",
-    "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^1.2.0"
-  }
+	"name": "backlunr",
+	"version": "0.2.4",
+	"description": "is a solution to bring Backbone Collections together with the browser fulltext search engine Lunr.js",
+	"main": "backlunr.js",
+	"directories": {
+		"test": "test"
+	},
+	"scripts": {
+		"compile-test": "gulp compileTest",
+		"compile-all": "gulp compileAll",
+		"release": "gulp release"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mpneuried/backlunr.git"
+	},
+	"keywords": [
+		"backbone",
+		"lunr",
+		"search"
+	],
+	"author": "mpneuried",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/mpneuried/backlunr/issues"
+	},
+	"homepage": "https://github.com/mpneuried/backlunr",
+	"devDependencies": {
+		"gulp": "^4.0.2",
+		"gulp-coffee": "^3.0.3",
+		"gulp-header": "^2.0.9",
+		"gulp-rename": "^2.0.0",
+		"gulp-uglify": "^3.0.2"
+	}
 }
